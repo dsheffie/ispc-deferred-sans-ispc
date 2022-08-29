@@ -128,7 +128,7 @@ InputData *CreateInputDataFromFile(const char *path) {
         return NULL;
     }
 
-#ifdef BIG_ENDIAN
+#if defined (BIG_ENDIAN_TARGET)
     bswap(input->header);
 #endif
     
@@ -169,7 +169,7 @@ InputData *CreateInputDataFromFile(const char *path) {
 
     fclose(in);
 
-#ifdef BIG_ENDIAN    
+#if defined (BIG_ENDIAN_TARGET)    
     int lengths[idaNum] = {0};
     printf("input->header.inputDataChunkSize = %d\n", input->header.inputDataChunkSize);
     int sum = 0;
