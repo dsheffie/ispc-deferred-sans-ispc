@@ -1,7 +1,7 @@
 OBJ = common.o  dynamic_c.o  main.o
-CXX = mips-sde-elf-g++
-EXE = deferred.mips
-OPT = -O3 -flto -fpermissive -DBIG_ENDIAN_TARGET=1
+CXX = g++
+EXE = deferred
+OPT = -O3 -flto -fpermissive
 CXXFLAGS = -g $(OPT)
 DEP = $(OBJ:.o=.d)
 
@@ -10,12 +10,10 @@ DEP = $(OBJ:.o=.d)
 all: $(EXE)
 
 $(EXE) : $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) $(LIBS) -o $(EXE) -Tidt.ld
-	mips-sde-elf-objdump -dw $(EXE) &> $(EXE).disasm
+	$(CXX) $(CXXFLAGS) $(OBJ) $(LIBS) -o $(EXE)
 
 %.o: %.cpp
-	$(CXX) -MMD $(CXXFLAGS)  -mno-branch-likely -c $< 
-
+	$(CXX) -MMD $(CXXFLAGS) -c $< 
 
 -include $(DEP)
 
