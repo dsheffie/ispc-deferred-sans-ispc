@@ -1,0 +1,22 @@
+OBJ = common.o  dynamic_c.o  main.o
+CXX = riscv32-unknown-elf-g++
+EXE = deferred.rv32
+OPT = -O3 -flto -fpermissive
+CXXFLAGS = -g $(OPT)
+DEP = $(OBJ:.o=.d)
+
+.PHONY: all clean
+
+all: $(EXE)
+
+$(EXE) : $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) $(LIBS) -o $(EXE) -specs=htif.specs
+
+%.o: %.cpp
+	$(CXX) -MMD $(CXXFLAGS) -c $< 
+
+
+-include $(DEP)
+
+clean:
+	rm -rf $(EXE) $(OBJ) $(DEP)

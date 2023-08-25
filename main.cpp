@@ -48,6 +48,10 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+#ifdef __riscv
+void * __dso_handle;
+#endif
+
 int main(int argc, char **argv) {
     InputData *input = CreateInputDataFromFile("data/pp1280x720.bin");
     if (!input) {
